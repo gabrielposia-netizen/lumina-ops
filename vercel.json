@@ -1,0 +1,9 @@
+{
+  "buildCommand": "node scripts/prepare-host.js",
+  "framework": null,
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 60
+    }
+  }
+}

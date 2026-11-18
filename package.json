@@ -1,0 +1,13 @@
+{
+  "name": "lumina-ops",
+  "private": true,
+  "type": "module",
+  "description": "Lúmina Ops — gestão da operação de e-commerce de cosméticos capilares",
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "build": "node scripts/prepare-host.js"
+  }
+}
