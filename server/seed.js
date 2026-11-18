@@ -1,6 +1,8 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { createUserRecord } from './auth.js';
 import { saveCategory, saveGoal, saveMaterial, saveProduct, saveShift, saveSupplier } from './catalog.js';
-import { logAlert, meta, one, run, saveUpload, wipeDb } from './db.js';
+import { logAlert, meta, one, run, uploadDir, wipeDb } from './db.js';
 import { capacityOf } from './insights.js';
 import { addDays, firstOfPreviousMonth, today } from './lib.js';
 import { expedite, produce, receive, registerInventory } from './stock.js';
@@ -78,7 +80,11 @@ export function seed() {
   const add = (data, color) => {
     const product = saveProduct({ brand: 'Lúmina Professional', unit: 'un', ...data }, adminId);
     ids[product.sku] = product.id;
-    const photo = saveUpload('uploads', `${product.sku}.svg`, monogram(product.name.trim().charAt(0), color));
+    const photo = `/uploads/${product.sku}.svg`;
+    if (!process.env.VERCEL) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+      fs.writeFileSync(path.join(uploadDir, `${product.sku}.svg`), monogram(product.name.trim().charAt(0), color));
+    }
     run('UPDATE products SET photo = ? WHERE id = ?', [photo, product.id]);
     return product;
   };

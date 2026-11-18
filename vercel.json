@@ -2,7 +2,8 @@
   "buildCommand": "node scripts/prepare-host.js",
   "framework": null,
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api?path=$1" }
+    { "source": "/api/(.*)", "destination": "/api?path=$1" },
+    { "source": "/uploads/(.*)", "destination": "/api?path=uploads/$1" }
   ],
   "functions": {
     "api/index.js": {

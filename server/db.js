@@ -435,11 +435,11 @@ export function wipeDb() {
 
 export function saveUpload(folder, filename, buffer) {
   const safe = String(filename || 'arquivo').replace(/[^a-zA-Z0-9._-]/g, '_').slice(-70);
-  const dir = path.join(root, folder);
+  const dir = hosted ? uploadDir : path.join(root, folder);
   fs.mkdirSync(dir, { recursive: true });
   const stored = `${Date.now()}-${Math.random().toString(16).slice(2, 8)}-${safe}`;
   fs.writeFileSync(path.join(dir, stored), buffer);
-  return `/${folder}/${stored}`;
+  return `/uploads/${stored}`;
 }
 
 export function isEmpty() {
